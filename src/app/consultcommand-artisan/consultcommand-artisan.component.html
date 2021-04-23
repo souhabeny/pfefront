@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-center">
+    <div class="col-sm-8">
+        <div class="md-form">
+            <input type="date" mdbInput class="form-control" [(ngModel)]="search" />
+            <input type="time" [(ngModel)]="search">    
+        </div>   
+        <table mdbTable striped="true" class="z-depth-1">
+            <thead>
+                <th>Image </th>
+                <th>Libelle</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Date</th>
+                <th>Heure</th>
+                <th>Client</th>
+            </thead>
+            <tbody>
+              <tr  *ngFor="let produit of produits | dateFilter:search">
+                <td> <img src="http://localhost:8000/storage/{{produit.image}}" width="150px" height="100px" /></td>
+                <td>{{produit.libelle}}</td>
+                <td>{{produit.prix - ((produit.prix/100)* produit.promo) | number:'1.3-3'}}</td>
+                <td>{{produit.qtecommande}}</td>
+                <td>{{produit.date | date:"dd/MM/yyyy"}}</td>
+                <td>{{produit.date | date:"HH:mm"}}</td>
+                <th>{{produit.nom}} {{produit.prenom}}</th>
+              </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center" id="load" >
+            <div class="spinner-border" role="status"> 
+            </div>
+        </div>
+    </div>
+</div>
+
+

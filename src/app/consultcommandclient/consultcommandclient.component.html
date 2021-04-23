@@ -1,0 +1,66 @@
+
+<div class="row d-flex align-items-baseline justify-content-around divAll">
+  <div class="col-sm-8">
+        <div class="md-form d-flex justify-content-around">
+            <input type="date" mdbInput class="form-control col-sm-4"[(ngModel)]="search" />
+            <input type="time" mdbInput class="form-control col-sm-3" [(ngModel)]="search"> 
+        </div>  
+        <table mdbTable striped="true">
+            <thead>
+                <th>Date</th>
+                <th>Heure</th>
+            </thead>
+            <tbody>
+              <tr  *ngFor="let commande of commandes  | dateFilter:search">
+                <td>{{commande.date | date:"dd/MM/yyyy"}}</td> 
+                <td>{{commande.date | date:"HH:mm"}}</td>
+                <td> <button type="button" class="btn btn-outline-warning  waves-effect" (click)="contentpanier.show();getproduitCommand(commande.id)">Voir detail panier</button></td>
+              </tr>
+            </tbody>
+        </table>
+        <div mdbModal #contentpanier class="modal caract" >
+          <div class="modal-dialog"  >
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h4 class="modal-title">Panier</h4>
+                      <button type="button" class="close"  (click)="contentpanier.hide()">
+                          <span>×</span>
+                      </button>
+                  </div>
+                  <div class="modal-body" > 
+                    <table mdbTable borderless="true">
+                        <th>Image</th>
+                        <th>Libelle</th>
+                        <th>Description</th>
+                        <th>Prix</th>
+                        <th>Qte </th>
+                        <tr  *ngFor="let lignecommande of lignecommandes ">
+                          <td><img src="http://localhost:8000/storage/{{lignecommande.image}}" width="150px" height="100px" /></td>
+                          <td>{{lignecommande.libelle}}</td>
+                          <td>{{lignecommande.description}}</td>
+                          <td>{{lignecommande.prix}}</td>
+                          <td>{{lignecommande.qtecommande}}</td>
+                        </tr>   
+                    </table>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center" id="load" value="load" >
+          <div class="spinner-border" >
+          </div>
+        </div>
+  </div>
+  <div class="col-sm-3 commande card">
+    <h5 class="text-center mb-2">Dernier commande passé</h5>
+    <p class="d-flex justify-content-between" *ngFor="let produit of lastproduits">
+        <span>{{produit.libelle}}</span>
+        <span>{{produit.date}}</span>
+        <span>{{produit.prix - ((produit.prix/100) * produit.promo) | number:'1.3-3' }}TND</span>
+    </p>
+
+  </div>
+
+
+</div>
+

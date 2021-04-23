@@ -1,9 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Poiret+One&display=swap" );
+@import url('https://fonts.googleapis.com/css?family=Abel&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Spartan&display=swap');
 //----------------------------------*\
 // Fonts
 //----------------------------------*/
 @import 'assets/fonts/scss/modules/fonts';
+@import "~angular-notifier/styles";
 // primary font
 
 // font-weight
@@ -11,14 +15,18 @@
 
 // font-weight
 
-footer{
-    font-family:'Lobster Two';
+footer
+{
+        font-family:'Poiret One', cursive;
   
 }
-nav{
-    font-family:'Lobster Two';
-  
+
+.login
+{
+        font-family:'Poiret One', cursive;
 }
-.login{
-    font-family:'Lobster Two';
+.card
+{
+        font-family:'Poiret One', cursive;
+        font-weight: bold;
 }

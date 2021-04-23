@@ -1,0 +1,47 @@
+<div class="row d-flex justify-content-around mt-5  grey lighten-4 show ml-5">
+    <div class=" mb-2 mt-2 col-sm-5">
+        <img class="img-fluid" src="http://localhost:8000/storage/{{produit.image}}" > 
+    </div> 
+
+    <div class="col-sm-7 mb-3">
+          <h2 >{{produit.libelle}}</h2>
+          <p>{{produit.description}} </p>
+          <div class="d-flex ">
+
+            <div *ngFor="let tc of tablecouleur" class="pl-1 mb-1">
+              <div [ngStyle]="{'background-color': tc}" style="width: 20px;height: 20px;" ></div>
+            </div>
+
+          </div>
+          
+          <div *ngIf="produit.promo >0 then thenBlock else elseBlock"></div>
+          <ng-template #thenBlock> 
+            
+              <div class="d-flex align-items-baseline">
+                <p  class="mr-2" class="prix">{{produit.prix | number:'1.3-3'}}</p>
+                <del class="ml-2" >{{(produit.prix / (100- produit.promo) *100) | number:'1.3-3'}} <span>TND</span></del> 
+              </div>
+
+          </ng-template>
+
+          <ng-template #elseBlock> 
+           <p> {{produit.prix  | number:'1.3-3'}}</p>
+          </ng-template>
+        <div class="d-flex justify-content-between">
+          
+          
+
+          <div class="d-flex justify-content-end">
+            <p  class="total">Sous total: </p>  
+            <p class="ml-2">{{(produit.prix - ((produit.prix / 100) * produit.promo)) * qte | number:'1.3-3'}}</p>
+          </div>
+
+        </div>
+         
+          <div class="d-flex justify-content-center">
+            <button type="button" (click)="AjouterprPanier(produit)" class="btn btnred" ><i class="fas fa-cart-plus mr-2 fa-lg"></i>Ajouter au panier </button> 
+          </div>
+
+    </div>
+</div>
+ 

@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center  all">
+    <div class="my-5 z-depth-4 login ">
+            <div class="headercard card-header">
+                <h3 class="white-text font-weight-bold text-center mt-3">Devis</h3>
+            </div>
+            <div class="card-body d-flex justify-content-around row">
+                <div class="col-sm-5 form px-3">
+                        <form #devisForm=ngForm [formGroup]='form' (ngSubmit)="onSubmit()">
+                            <div class="md-form">
+                                <p>Quantité</p>
+                                <input type="number" class="form-control" readonly mdbInput formControlName="qte"    value="{{prod.qte}}"/>
+                            </div>
+                            <div class="md-form d-flex flex-column">
+                                <p>Prix de vente</p>
+                                <input type="text" class="form-control"  mdbInput readonly   value="{{prix}}"/>
+                            </div>
+                            <div *ngIf="prod.tab[0].tc != 'vide' ">
+                            <div *ngFor="let tc of prod.tab;let j=index" class=" mt-2 "  >
+                                <div class=" d-flex flex-column" >
+                                  <div [ngStyle]="{'background-color': tc.tc}" style="width: 20px;height: 20px;" ></div>
+                                   <span>Quantité couleur :{{tc.qte}}</span>
+
+                              
+                                </div>
+                              </div>
+                            </div>
+                            <div class="md-form ">
+                                <p>Prix proposé</p>
+                                <input type="text" class="form-control" required mdbValidate pattern="([0-9]{0,7}[.]?[0-9]|[0-9]{0,8}\.[0-9]{0,2})" mdbInput formControlName="prix_propose" min="0"  />
+                                <mdb-error *ngIf="prix_propose.invalid && (prix_propose.dirty || prix_propose.touched)">Prix obligatoire et Contiennent des chiffres seulement <span style="font-size: 10px;">exemple(99999999.999) </span> </mdb-error>
+                                <mdb-success *ngIf="prix_propose.valid && (prix_propose.dirty || prix_propose.touched)"></mdb-success> 
+                            </div>
+                            <hr>
+                            <div class=" d-flex justify-content-center mb-4 ">
+                                <button class="btn btnred " [disabled]="!devisForm.valid" >Envoyer  <i class="fas fa-chevron-right ml-1"></i> </button>
+                            </div>
+                        </form>  
+                </div>
+                <div class="col-sm-5 divimg px-3">
+                    <img src="http://localhost:8000/storage/{{prod.produit.image}}"  class="img-fluid  mt-5"/>
+                </div>
+            </div>
+    </div>
+</div>

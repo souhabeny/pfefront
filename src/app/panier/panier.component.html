@@ -1,0 +1,97 @@
+<div class="row d-flex align-items-baseline justify-content-center panierAll">
+  <div class="col-sm-7 table-responsive">
+    <table class="table  mb-5 mt-5   ">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Libelle</th>
+          <th>Couleur</th>
+          <th >Quantité par couleur</th>
+          <th>Prix</th>
+          <th >Quantité</th>
+          <th>Action</th>
+          <th>Devis</th>
+          <th>Prix total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let produit of p2;let i=index ">
+          <th> <img src="http://localhost:8000/storage/{{produit.produit.image}}" width="200px" class=" img-fluid"></th>
+          <td>{{produit.produit.libelle}}</td>
+          <td>
+            <div *ngFor="let tc of produit.produit.couleur ;let j=index" class=" mt-2 "  >
+              <div class=" d-flex flex-column" >
+                <div [ngStyle]="{'background-color': tc}" style="width: 20px;height: 20px;" ></div>
+                <i class="far fa-minus-square"  [hidden]="tabbol[i]"title="Supprimer couleur de produit" (click)="deleteColor(i,j,produit.produit.couleur)" id="icondeleteColor"></i>
+
+             
+
+            
+              </div>
+            </div>
+          </td>
+          <td>
+              <div *ngFor="let t of produit.tab ;let j=index;" class=" mt-2 "  >
+                <div *ngIf="produit.produit.couleur[0] != 'vide'">
+                  <form   [formGroup]="formCouleur">
+                  <input type="number"  class="form-control" style="width: 50px;" formControlName="qtecouleur" min="0" max="10"  value= "{{t.qte}}"(click)="color(produit,i,t,j)" />
+                  </form> 
+                </div>
+                <div *ngIf="produit.produit.couleur[0] == 'vide'">
+                  <form   [formGroup]="formCouleur">
+                  <input type="number"  hidden="true"  class="form-control" style="width: 50px;" formControlName="qtecouleur" min="0" max="10"  value= "{{t.qte}}"(click)="color(produit,i,t,j)" />
+                  </form> 
+                </div>
+             </div>
+            </td>
+          <td>{{produit.produit.prix  | number:'1.3-3'}}</td>
+          <td>
+            <div *ngIf="produit.produit.couleur[0] == 'vide'">
+              <form  [formGroup]="form">
+                <input type="number"   id ="qte" class="form-control" style="width: 80px;" formControlName="qte"  min="0"  (click)="update(produit,i)" value="{{produit.qte}}" />
+              </form>
+            </div>
+            <div *ngIf="produit.produit.couleur[0] != 'vide'">
+              <form  [formGroup]="form">
+                <input type="number"  readonly id ="qte" class="form-control" style="width: 80px;" formControlName="qte"     value="{{produit.qte}}" />
+              </form>
+            </div>
+          </td>
+          <td>
+            <label>  
+                <i class="far fa-trash-alt fa-lg ml-2" type="submit"  (click)="supprimerproduit(i,produit)" > </i>
+            </label>
+          </td>
+          <td>
+            <label>  
+              <i class="fas fa-clipboard-list fa-lg ml-2" (click)="devis(i,produit)"></i>
+            </label>
+          </td>
+          <td>{{produit.produit.prix * produit.qte | number:'1.3-3'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <button type="button" class="btn-outline-grey  px-2 py-2"   routerLink="catalogue"><i class="fas fa-angle-left mr-1 fa-lg"></i>Poursuivre achats</button>
+      <button type="button" class="btn-outline-grey  px-2 py-2 ml-2"   (click)="consultcommand()" ><i class="far fa-list-alt mr-1 fa-lg"></i>Consulter tous commandes</button>
+      <button type="button" class="btn-outline-grey  px-2 py-2 ml-2"   (click)="consultdevisclient()" ><i class="fas fa-clipboard-check mr-1 fa-lg"></i>Consulter tous devis</button>
+    </div>
+  </div>
+  <div class="col-sm-3 commande card">
+        <p class="d-flex justify-content-between">
+          <span>Articles</span>
+          <span>{{total  | number:'1.3-3'}} TND</span>
+        </p>
+
+      
+        <p class="d-flex justify-content-between">
+          <span>Livraison</span>
+          <span>7.000 TND</span>
+        </p>
+        <hr/>
+        <h6 >Total : {{total +7  | number:'1.3-3'}} TND</h6>
+        <button type="button" class="btn btnred"  (click)="passercommand()">Passer commande <i class="fas fa-angle-right ml-1 fa-lg"></i></button>
+
+      
+  </div>
+</div>

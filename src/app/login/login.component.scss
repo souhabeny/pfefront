@@ -1,4 +1,38 @@
-mdb-card{
-    width:60%;
- 
+.login
+{
+        width:52%;
+        border-radius: 7px;
+}
+
+.alert
+{
+        font-family: Arial, Helvetica, sans-serif;
+}
+a
+{
+        color:grey;
+        font-weight: bold;
+        font-size: 15px;
+}
+a:hover
+{
+        color:#CC0000;
+}
+.headercard
+{
+        border-radius:7px 7px 0 0;
+        height: 180px;
+   
+}
+label,input
+{
+        font-weight: bold;
+}
+h4
+{
+        color: black;
+}
+.fas
+{
+        font-size: 22px;
 }

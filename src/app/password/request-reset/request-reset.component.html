@@ -1,29 +1,39 @@
-<div class="d-flex justify-content-center login">
-    <mdb-card class="my-5">
-    
-       <h4 class=" font-weight-bold text-center mt-3">Sign in</h4>      
-            <mdb-card-body>
-          <div class=" mx-3">
-           <form #loginForm=ngForm (ngSubmit)="onSubmit()">
-          
-            <div class="md-form mb-5" >
-              <mdb-icon fas icon="envelope" class="prefix grey-text"></mdb-icon>
-              <input mdbInput type="email" id="defaultForm-email" name="email"  class="form-control" [(ngModel)]="form.email" required>
-              <label for="defaultForm-email">Your email</label>
-            </div>
-    
+<div class="d-flex justify-content-center  ">
+  <div class="my-5 reset ">
+      <h5 class=" font-weight-bold mt-3 ml-1 mb-3">Mot de Passe oublié </h5> 
+      <div class="d-flex ">
+        <i class="fas fa-info-circle ml-1 fa-lg"></i>
+        <p class=" ml-3">
+          Veuillez saisir votre email associé à votre compte pour recevoir un lien de  réinitialiseation de votre mot de passe sur cette adresse e-mail
+        </p>
+      </div>
            
-    
-            <div class=" d-flex justify-content-center mb-2">
-              <button mdbBtn color="red" class="waves-light" mdbWavesEffect [disabled]="!loginForm.valid">Login</button>
-            </div>
-          </form>
+      <div class="mb-2">
+          <div class=" mx-3">
+            <form #ResetForm=ngForm [formGroup]='form' (ngSubmit)="onSubmit()">
+                <div class="alert alert-danger" style =" font-family: Arial, Helvetica, sans-serif;" [hidden]="!error">
+                    {{error}}
+                </div>
+                <div class="md-form mb-5 " >
+                    <input type="email" id="email" class="form-control" mdbInput mdbValidate  required pattern="[^ @]*@[^ @]*" autocomplete="username" formControlName="email">
+                    <label for="email">Email</label>
+                    <mdb-error *ngIf="email.invalid && (email.dirty || email.touched)">
+                        <span *ngIf="email.errors.required">Email obligatoire</span>
+                        <br>
+                        <span *ngIf="email.errors.email">Email invalide</span>
+                    </mdb-error>
+                    <mdb-success *ngIf="email.valid && (email.dirty || email.touched)"></mdb-success>
+                </div>
+                <div class=" d-flex  flex-column justify-content-center mb-2">
+                  <button class="btn btnred ml-sm-5"  [disabled]="!ResetForm.valid">Réinitialiser</button>
+                  
+                </div>
+                <div class="btnRetour">
+                  <a href="/login" >Retour</a>
+                </div>
+                
+            </form>
           </div>
-        
-          </mdb-card-body>
-         
-        
-     
-    
-    </mdb-card>
-    </div>
+      </div>
+  </div>
+</div>

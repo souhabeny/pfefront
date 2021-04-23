@@ -1,1 +1,299 @@
-<p>dashbored-client works!</p>
+<div  class="all">
+  <div class="row rela-block container  mt-1 col-sm-12">
+    <div class="rela-block profile-card d-flex justify-content-start flex-wrap">
+        <div class="view  profile-pic">
+          <img src="http://localhost:8000/storage/{{data?.image}}" class="img-fluid" >
+        </div> 
+        <div class="profile-name-container d-flex align-items-start flex-column ">
+            <div class="user-name " >
+              {{data?.nom}} {{data?.prenom}}
+            </div>
+            <div class="mb-5 d-flex">
+                <button type="button" class="btn btn-outline-grey" (click)="contentprofil.show();user()">Modifier profil</button>
+                <div mdbModal #contentprofil class="modal " >
+                    <div class="modal-dialog"  >
+                        <div class="modal-content">
+                            <div class="modal-header d-flex justify-content-center">
+                              <h4 class="modal-title">Modifier données personnelles</h4>
+                              <button type="button" class="close"  (click)="contentprofil.hide()">
+                                <i class="fas fa-times fa-lg"></i>
+                              </button>
+                            </div>
+                            <div class="modal-body scrollbar">
+                              <div class="d-flex justify-content-around  z-depth-1 " (click)="showParam()">
+                                <div class="d-flex  justify-content-start mt-2 mb-2 " >
+                                    <i class="fas fa-cog mr-3 ml-1"  ></i>
+                                  
+                                    <p>Paramètres généraux du compte</p>
+                                </div>
+                                <i class="fas fa-chevron-right mt-2 mb-2 " *ngIf="hideElementparam==true"></i> 
+                                <i class="fas fa-chevron-down mt-2 mb-2 " *ngIf="hideElementparam==false"></i>
+                              </div>
+                              <div [hidden]="hideElementparam" id="formmodiduser" >
+                                  <form  #modifuserForm=ngForm [formGroup]="formUser" (ngSubmit)="updateUser()" >  
+                                    
+                                            
+                                        <div class=" browse-buttonuser mb-3" >
+                                              <div class=" d-flex flex-column justify-content-around align-items-center" >
+                                              
+                                                  <button type="button" class="btn btn-light editimguser " >
+                                                  <i class="fas fa-user fa-5x" style="margin-left: -10px;"></i>
+                                                  </button>
+                                                  <span>{{fileuser}}</span>
+                                              </div>
+                                              <input class="browse-inputuser" type="file"  (change)="file($event)" id="fileModifierUtilisateur"/>
+                                            
+                                        </div>  
+                  
+                                        <div class="form-row md-form mb-5 pt-5 ">
+                                            <div class="col">              
+                                                <div>
+                                                  <input type="text" id="nom" name="nom" required  mdbInput mdbValidate class="form-control" formControlName="nom" placeholder="Nom" value="{{data?.nom}}">
+                                                  <mdb-error *ngIf="nom.value == ''  && nom.invalid ">
+                                                    Nom ne peut pas étre vide
+                                                  </mdb-error>
+                                                  <mdb-success *ngIf="nom.value != null  || nom.valid && (nom.dirty || nom.touched)"></mdb-success>
+                                                      
+                                                  </div>
+                                                    
+                                            </div>
+                                            <div class="col">
+                                                <div>
+                                                  <input type="text" required mdbInput mdbValidate id="prenom" class="form-control" formControlName="prenom" placeholder="Prenom" value="{{data?.prenom}}">
+                                                  <mdb-error *ngIf="prenom.value == ''  && prenom.invalid ">
+                                                    Prenom ne peut pas étre vide
+                                                  </mdb-error>
+                                                  <mdb-success *ngIf="prenom.value != null  || prenom.valid && (prenom.dirty || prenom.touched)"></mdb-success>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row md-form mb-1">
+                                          <div class="col">
+                                            
+                                              <div>
+                                                <input type="date" id="datenaiss" required mdbInput mdbValidate class="form-control"   formControlName="datenaiss" placeholder="Date de naissance" value="{{data?.datenaiss}}">
+                                                <mdb-error *ngIf="datenaiss.value == ''  && datenaiss.invalid ">
+                                                  Date de  naissance ne peut pas étre vide
+                                                </mdb-error>
+                                                <mdb-success *ngIf="datenaiss.value != null && datenaiss.valid && (datenaiss.dirty || datenaiss.touched)"></mdb-success>
+                                                
+                                              </div>
+                                          </div>
+                                        
+                                        </div>
+                                        <div class="form-row  md-form mb-1">
+                                            <div class="col">
+                                              <div>
+                                                <input type="text" id="adresse" mdbInput mdbValidate required  class="form-control"  formControlName="adresse" placeholder="Adresse" value="{{data?.adresse}}">
+                                                <mdb-error *ngIf="adresse.value == ''  && adresse.invalid ">
+                                                  Adresse ne peut pas étre vide
+                                                </mdb-error>
+                                                <mdb-success *ngIf="adresse.value != null && adresse.valid && (adresse.dirty || adresse.touched)"></mdb-success>
+                                              </div>
+                                            </div>
+
+                                            <div class="col">
+                                              <div>
+                                                <input type="text" id="codePostal" mdbInput mdbValidate pattern="[0-9]{0,4}" required class="form-control" formControlName="codePostal" placeholder="Code postal" value="{{data?.codePostal}}">
+                                                <mdb-error *ngIf="codePostal.value == '' || codePostal.invalid ">
+                                                  Code postal ne peut pas étre vide <span>(Comprends 4 chiffres  seulement)</span>
+                                                </mdb-error>
+                                                <mdb-success *ngIf="codePostal.value != null && codePostal.valid && (codePostal.dirty || codePostal.touched)"></mdb-success>
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row md-form mb-1">
+                                            <div class="col"> 
+                                                <div>
+                                                  <input type="text" id="tel" required mdbInput mdbValidate pattern="[0-9]{0,8}" class="form-control"   formControlName="tel" placeholder="Téléphone" value="{{data?.tel}}">
+                                                  <mdb-error *ngIf="tel.value == '' || tel.invalid ">
+                                                    Téléphone ne peut pas étre vide <span>(Comprends 8 chiffres  seulement)</span>
+                                                  </mdb-error>
+                                                  <mdb-success *ngIf="tel.value != null && tel.valid && (tel.dirty || tel.touched)"></mdb-success>
+                                                  
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div>
+                                                  <input type="email" id="email" mdbInput mdbValidate required  pattern="[^ @]*@[^ @]*"  placeholder="Email"  autocomplete="username" class="form-control"  formControlName="email" placeholder="Email" value="{{data?.email}}">
+                                                  <mdb-error *ngIf="email.value == ''  && email.invalid ">
+                                                    Email ne peut pas étre vide
+                                                  </mdb-error>
+                                                  <mdb-success *ngIf="email.value != null && email.valid && (email.dirty || email.touched)"></mdb-success>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div>
+                                            <div class="form-row md-form mb-1">
+                                              <div class="col">
+                                                  <div>
+                                                    <input type="hidden" id="passwordhidden" mdbInput mdbValidate autocomplete="false" class="form-control"   formControlName="password" placeholder="Mot de passe" value="{{data?.password}}">
+                                                  </div>
+                                              </div>
+                                              <div class="col">
+                                                <div>
+                                                  <input type="hidden" id="password_confirmationhidden" mdbInput mdbValidate autocomplete="false" class="form-control"  formControlName="password_confirmation" placeholder="Confimer mot de passe" value="{{data?.password}}" >
+                                                </div>
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <div class="md-form">
+                                             <select class=" custom-select" mdbSelect mdbValidate formControlName="idGouvernerat" value="{{data?.idGouvernerat}}" >
+                                                  <option  *ngFor="let gouvernorat of gouvernorats2" [value]="gouvernorat.id">          
+                                                    {{gouvernorat.nomGouvernerat}}
+                                                  </option>
+                                              </select>
+                                              <mdb-error *ngIf="gouvernorats.value == ''  && gouvernorats.invalid "> Choisir une gouvernorat </mdb-error>
+                                              <mdb-success *ngIf="gouvernorats.value != null && gouvernorats.valid && (gouvernorats.dirty || gouvernorats.touched)"></mdb-success>
+                                        </div>
+                                    
+                                        <div class="modal-footer">
+                                            <button class="btn btn-outline-red"  [disabled]="!modifuserForm.valid" type="submit">Modifier</button>   
+                                        </div>
+                                    
+                                  </form>
+                              </div>
+                              
+                              <div class="d-flex justify-content-around mt-2 z-depth-1 " (click)="showpassword()">
+                                <div class="d-flex  justify-content-start mt-2 mb-2 ">
+                                    <i class="fas fa-key mr-3 ml-1"></i>
+                                    <p>Changer mot de passe </p>
+                                </div>
+                                <i class="fas fa-chevron-right mt-2 mb-2 ml-5 " *ngIf="hideElementpwd==true"></i> 
+                                <i class="fas fa-chevron-down mt-2 mb-2 ml-5 " *ngIf="hideElementpwd==false"></i>
+                              </div>
+                              <div [hidden]="hideElementpwd" id="formmodifpwd"  >
+                                <form #modifuserpasswordForm=ngForm [formGroup]="formUserPassword" (ngSubmit)="updateUserPassword()" >
+                                    <input type="hidden" class="form-control mb-1"  value="{{data?.id}}" >       
+                                    <input type="hidden" id="nomhidden"   class="form-control" formControlName="nom" placeholder="Nom" value="{{data?.nom}}">
+                                    <input type="hidden"  id="prenomhidden" class="form-control" formControlName="prenom" placeholder="Prenom" value="{{data?.prenom}}">
+                                    <input type="hidden" id="datenaisshidden"   class="form-control"   formControlName="datenaiss" placeholder="Date de naissance" value="{{data?.datenaiss}}">
+                                    <input type="hidden" id="adressehidden"   class="form-control"  formControlName="adresse" placeholder="Adresse" value="{{data?.adresse}}">       
+                                    <input type="hidden" id="codePostalhidden"  class="form-control" formControlName="codePostal" placeholder="Code postal" value="{{data?.codePostal}}">
+                                    <input type="hidden" id="telhidden"   class="form-control"   formControlName="tel" placeholder="Téléphone" value="{{data?.tel}}">      
+                                    <input type="hidden" id="emailhidden"    pattern="[^ @]*@[^ @]*"  placeholder="Email"  autocomplete="username" class="form-control"  formControlName="email" placeholder="Email" value="{{data?.email}}">
+                                    <select [hidden]="true" class=" custom-select"  formControlName="idGouvernerat" value="{{data?.idGouvernerat}}" >
+                                          <option  *ngFor="let gouvernorat of gouvernorats2" [value]="gouvernorat.id">          
+                                            {{gouvernorat.nomGouvernerat}}
+                                          </option>
+                                    </select> 
+                                    <input type="file" [hidden]="true" mdbFileSelect (change)="file($event)" >
+                                   
+                                    <div class="d-flex align-items-center flex-column">
+                                        <form #modifuserpasswordForm=ngForm [formGroup]="formPassword" (ngSubmit)="updateUserPassword()" >
+                                            <input type="hidden"  mdbInput mdbValidate  value="{{data?.password}}" placeholder="Mot de passe actuel" formControlName="pass" class="form-control inputpwd">
+                                            <div class="md-form mb-5">
+                                                  <label for="actuel">Actuel</label> 
+                                                  <input type="password" id="actuel" autocomplete="false" mdbInput mdbValidate     formControlName="actuel" class="form-control inputpwd">
+                                                  <mdb-error class="pb-5" *ngIf="actuel.invalid && (actuel.dirty || actuel.touched)">Le mot de passe doit être composé de 8 à 20 caractères </mdb-error>
+                                                  <mdb-success *ngIf="actuel.valid && (actuel.dirty ||actuel.touched)"></mdb-success>
+                                            </div>
+                                        </form>
+                                        <div class="md-form mb-5">
+                                          <div>
+                                              <label for="password">Nouveau</label>
+                                              <input type="password" id="password" mdbInput mdbValidate autocomplete="false" class="form-control inputpwd pt-2 "   formControlName="password" >
+                                              <mdb-error *ngIf="password.invalid && (password.dirty || password.touched)">
+                                                 Mot de passe doit contient 8 à 20 charactéres 
+                                              </mdb-error>
+                                              <mdb-success *ngIf="password.valid && (password.dirty || password.touched)"></mdb-success>
+                                            
+                                          </div>
+                                        </div>
+                                    
+                                        <div class=" md-form mb-5">
+                                          <div>
+                                              <label for="password_confirmation">Confirmer</label>
+                                              <input type="password" id="password_confirmation" mdbInput mdbValidate autocomplete="false" class="form-control inputpwd "  formControlName="password_confirmation"   >
+                                              <mdb-error *ngIf="password_confirmation.invalid && (password_confirmation.dirty || password_confirmation.touched) ">
+                                                 Mot de passe doit contient 8 à  20 charactéres 
+                                              </mdb-error>
+                                              <mdb-success *ngIf=" password_confirmation.valid && (password_confirmation.dirty || password_confirmation.touched)"></mdb-success>
+                                            
+                                          </div>
+                                        
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                          <button class="btn btn-outline-red"   [disabled]="!modifuserpasswordForm.valid" type="submit">Modifier</button>   
+                                    </div>
+                                </form>
+                              
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rela-block profile-card-info d-flex justify-content-around">
+                    <div class="col-sm-4  profile-info " >
+                        <p class="content">Achats</p> 
+                        <p> {{nbAchat}}</p>
+                    </div>
+                
+                    <div class="col-sm-4  profile-info " routerLink="/message" >
+                        <p class="content">Messages</p> 
+                        <p><i class="far fa-comments"></i></p>
+                    </div>
+                
+                </div>
+            </div>
+    
+    
+        </div>
+      
+    </div>
+  </div>  
+  <div class=" col-sm-12">
+    <div class="container2">
+      <ul class="posts" *ngFor="let produit of produits | paginate: { itemsPerPage: 10, currentPage: page } let i = index ">
+          <li class="post">
+              <div class="post-content">
+                  <div class="pl-3 pt-2">
+                      <h5>{{produit?.nom}} {{produit?.prenom}} </h5>
+                      <p>{{produit?.created_at  | date:'mediumDate'}}</p>
+                  </div>
+                  <img src="http://localhost:8000/storage/{{produit?.image}}"/>
+                  <div class="pl-3 pt-1 pb-2 d-flex justify-content-between"> 
+                      <div>
+                        <h6>{{produit?.libelle}}</h6>
+                        <p>{{produit?.description}} </p>
+                      </div>
+                      <div>
+                        {{nblikes[i]}} <button type="button"   class="btn btnlike" id="btnlike{{i}}"(click)="addlike(produit?.id,i)"><i  class="far fa-thumbs-up fa-lg "   ></i></button>  
+                        {{nbdislikes[i]}}<button type="button"   class="btn btndislike" id="btndislike{{i}}"(click)="adddislike(produit?.id,i)">   <i class="far fa-thumbs-down fa-lg" ></i></button>
+                      </div>
+                
+                  </div>
+        
+              </div>
+              <img class="post-avatar" src="http://localhost:8000/storage/{{produit?.imguser}}"/>
+          </li>
+        
+      </ul>
+    </div>
+   
+    
+  </div>
+  <div class="col-sm-12 d-flex justify-content-center card-footer px-2 py-2 mb-2">
+    <pagination-controls class="my-pagination" (pageChange)="page = $event"   responsive="true" previousLabel="Précédent" nextLabel="Suivant">
+    </pagination-controls>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

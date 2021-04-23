@@ -1,0 +1,53 @@
+<div class="md-form d-flex justify-content-around">
+  <input type="date" mdbInput class="form-control col-sm-4" [(ngModel)]="search" />
+</div>
+<div class="d-flex justify-content-center table-responsive">
+    <table class="table table-striped col-sm-8 mt-2">
+      <thead class="grey lighten-2">
+          <th>Image</th>
+          <th>Libelle</th>
+          <th>Couleur</th>
+          <th>Quantité par couleur</th>
+          <th>Prix</th>
+          <th>quantité générale</th>
+          <th width="20%" >Prix proposé</th>
+          <th>Date</th>
+          <th>Réponse</th>
+          <th>Valider Commande</th>
+      </thead>
+      <tbody>
+        <tr  *ngFor="let produit of produits| dateFilter:search ;let reponse of tabrep;let i=index ">
+          <td>
+              <img src="http://localhost:8000/storage/{{produit.image}}" width="120px" class=" img-fluid">
+          </td>
+          <td>{{produit?.libelle}}</td>
+          <td>
+            <div *ngIf="produit.couleurSouhaite[0] != 'vide' ">
+          <div class="d-flex flex-column">
+              <div *ngFor="let tc of produit.couleurSouhaite" class="pl-1 mb-1  mt-2 ">
+                <div [ngStyle]="{'background-color': tc}" style="width: 20px;height: 20px;" ></div>
+              </div>
+          </div>
+             </div>
+        </td>
+        <td>
+         <div *ngIf="produit.couleurSouhaite[0] != 'vide' ">
+          <div class="d-flex flex-column">
+                     <div *ngFor="let tq of produit.qtecouleur" class="pl-1 mb-1 mt-2">
+                  <span>{{tq}}</span>
+                      </div>
+          </div>
+         </div> 
+        </td>
+          <td>{{produit?.prix}}</td>
+          <td>{{produit?.qte}}</td>
+          <td >{{produit?.prixpropose}}</td>
+          <td>{{produit?.date  | date:"dd/MM/yyyy" }}</td>
+          <td>{{tabrep[i]}} </td> 
+          <td>
+            <button type="button" [disabled]="disables[i]"  class="btn btn-outline-red" id="passercommand" (click)="passercommand(produit)">Passer commande <i class="fas fa-angle-right ml-1 fa-lg"></i></button>
+          </td>
+        </tr>
+      </tbody>
+   </table>
+</div>

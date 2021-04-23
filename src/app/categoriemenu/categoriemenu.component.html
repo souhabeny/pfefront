@@ -1,0 +1,12 @@
+
+   <h6  class="list-group-item waves-light danger-color-dark"  style="color: white;font-weight: bold;">
+         <i class="fas fa-bars ml-1 mr-2"></i> Catégories
+   </h6>
+   <a  class="list-group-item list-group-item-action categorie"   href="http://localhost:4200/catalogue" >Tout categories  </a>
+   <div  class="list-group categorie"  *ngFor="let categorie of categories2">
+         <a  class="list-group-item list-group-item-action "  href="http://localhost:4200/catalogue/produitcateg/{{categorie.id}}" >{{categorie.nomcategorie}}     </a>
+  </div>
+      
+   
+        
+  

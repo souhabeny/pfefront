@@ -1,31 +1,47 @@
-<div class="d-flex justify-content-center signup ">
-  <mdb-card class="mt-3">
+
+
   
-      <mdb-card-header class="danger-color-dark white-text text-center py-4">
-        <h5>
-          <strong>Inscrivez vous</strong>
-        </h5>
-      </mdb-card-header>
-    
+
+ 
+  <mdb-card class="mt-3 z-depth-1 signup ml-2">
   
-      <mdb-card-body class="pt-0">
-    
-       <form #signupForm=ngForm [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="pt-0 d-flex justify-content-around row">
+        <div class="col-sm-4">
+          <img src="../../assets/artiste-ou-artisan.jpg" style="width: 490px; max-height:400px" />
+        </div>
+    <div class="col-sm-7 scrollbar">
+      <form #signupForm=ngForm [formGroup]="form" (ngSubmit)="onSubmit()">
+        
         <div class="text-center">
-    
+          <div class=" browse-buttonuser mb-3">
+            <div class=" d-flex flex-column justify-content-around align-items-center" >
+             
+              <button type="button" class="btn btn-light editimguser " ><i class="fas fa-user fa-5x"></i></button>
+              <span ></span>
+            </div>
+              <input class="browse-inputuser" type="file" mdbFileSelect (change)="fileEvent($event)" id="fileModifierUtilisateur"/>
+              
+          </div> 
+             <span>{{fileimage}}</span> 
+          
           <div class="form-row">
             <div class="col">
               
               <div class="md-form">
-                <input type="text" id="nom" class="form-control" mdbInput  formControlName="nom">
-                <label for="nom">Nom</label>
+                <input type="text" id="nom"   class="form-control" mdbInput mdbValidate  formControlName="nom" >
+                <label for="nom">Nom </label>   
+                
+                <mdb-error *ngIf="nom.invalid && (nom.dirty || nom.touched)">Le nom est obligatoire</mdb-error>
+                <mdb-success *ngIf="nom.valid && (nom.dirty || nom.touched)"></mdb-success>
               </div>
             </div>
             <div class="col">
              
               <div class="md-form">
-                <input type="text" id="prenom" class="form-control" mdbInput  formControlName="prenom">
-                <label for="prenom">Prenom</label>
+                <input type="text" id="prenom" class="form-control" mdbInput  mdbValidate formControlName="prenom">
+                <label for="prenom">Prénom</label>
+                <mdb-error *ngIf="prenom.invalid && (prenom.dirty || prenom.touched)">Le prenom est obligatoire</mdb-error>
+                <mdb-success *ngIf="prenom.valid && (prenom.dirty || prenom.touched)"></mdb-success>
               </div>
             </div>
           </div>
@@ -34,15 +50,24 @@
               <div class="col">
                 
                 <div class="md-form">
-                  <input type="email" id="email" class="form-control" mdbInput formControlName="email">
+                  <input type="email" id="email" class="form-control" mdbInput mdbValidate  required pattern="[^ @]*@[^ @]*" formControlName="email">
                   <label for="email">Email</label>
+                  <mdb-error *ngIf="email.invalid && (email.dirty || email.touched)">
+                    <span *ngIf="email.errors.required">Email obligatoire</span>
+                    <span *ngIf="email.errors.email">Email invalide</span>
+                  </mdb-error>
+                  <mdb-success *ngIf="email.valid && (email.dirty || email.touched)"></mdb-success>
                 </div>
               </div>
              <div class="col">
                
                 <div class="md-form">
-                  <input type="date" id="datenaiss" class="form-control" mdbInput formControlName="datenaiss">
+                  <input type="date" required id="datenaiss"  pattern="\d{4}-\d{1,2}-\d{1,2}" class="form-control" mdbInput mdbValidate formControlName="datenaiss">
                   <label for="datenaiss">Date de naissance</label>
+                  <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)">
+                    <span *ngIf="date.errors.required">Date de naissance obligatoire</span>
+                  </mdb-error>
+                  <mdb-success *ngIf="date.valid && (date.dirty ||date.touched)"></mdb-success>
                 </div>
               </div>
             </div>
@@ -50,83 +75,120 @@
               <div class="col">
                 
                <div class="md-form">
-                  <input type="text" id="adresse" class="form-control" mdbInput formControlName="adresse">
+                  <input type="text" required id="adresse" class="form-control" mdbInput formControlName="adresse">
                   <label for="adresse">Adresse</label>
+                  <mdb-error *ngIf="adresse.invalid && (adresse.dirty || adresse.touched)">Adresse est obligatoire</mdb-error>
+                  <mdb-success *ngIf="adresse.valid && (adresse.dirty || adresse.touched)"></mdb-success>
                 </div>
               </div>
+
+             
+
              <div class="col">
-               
+             
                <div class="md-form" >
-                  <select class=" custom-select" formControlName="gouvernorats" >
-                    <option [value]="gouvernorat.name" *ngFor="let gouvernorat of gouvernorats2">          
-                         {{gouvernorat.name}}
-                        
+                   
+                  <select type="text" mdbSelect id="Gouvernorat" title="Gouvernorat" mdbValidate required class=" custom-select" formControlName="idGouvernerat" >
+                    <option [ngValue]="null" selected>Gouvernorat</option>
+                    <option  *ngFor="let gouvernorat of gouvernorats2" [value]="gouvernorat.id">          
+                      {{gouvernorat.nomGouvernerat}}
+                      
                     </option>
                     </select>
+                    <mdb-error *ngIf=" gouvernorats.invalid && (gouvernorats.dirty ||  gouvernorats.touched)">Choisir votre gouvernorat</mdb-error>
+                    <mdb-success *ngIf=" gouvernorats.valid && (gouvernorats.dirty ||  gouvernorats.touched)"></mdb-success>
                 </div>
               </div>
-              <div class="col">
-               
-                <div class="md-form" >
-                   <select class=" custom-select" formControlName="role" >
-                     <option [value]="role.name" *ngFor="let role of role">          
-                          {{role.name}}
-                         
-                     </option>
-                     </select>
-                 </div>
-               </div>
+              
            </div>
          
             
-           <div class="form-row" class="form-group">
+           <div class="form-row">
               <div class="col">
                 
                 <div class="md-form">
-                  <input type="text" id="codepos" class="form-control" mdbInput formControlName="codePostal">
+                  <input type="text" required id="codepos" class="form-control" mdbInput  mdbValidate formControlName="codePostal">
                   <label for="codepos">Code postal</label>
+                  <mdb-error *ngIf="codePostal.invalid && (codePostal.dirty || codePostal.touched)">Le code postal doit être composé de 4 chiffres</mdb-error>
+                  <mdb-success *ngIf="codePostal.valid && (codePostal.dirty || codePostal.touched)"></mdb-success>
                 </div>
               </div>
              
               <div class="col">
-               
-              
-                <div class="form-group">
-                      
-                       
-                          <label for="image"></label>
-                          <input type="file" mdbFileSelect (change)="fileEvent($event)" >
-                        
-             
-                     
-                    </div>
-              
+                
+                <div class="md-form">
+                  <input type="text" id="tel" required class="form-control" mdbInput  mdbValidate formControlName="tel">
+                  <label for="tel">Téléphone</label>
+                  <mdb-error *ngIf="tel.invalid && (tel.dirty || tel.touched)">Le téléphone doit être composé de 8 chiffres</mdb-error>
+                  <mdb-success *ngIf="tel.valid && (tel.dirty || tel.touched)"></mdb-success>
+                </div>
               </div>
+             
+
+             
             </div>
   
             <div class="form-row">
               <div class="col">
                 
                 <div class="md-form">
-                  <input type="password" id="password" class="form-control" mdbInput  formControlName="password">
+                  <input type="password"  id="password" class="form-control" mdbInput   mdbValidate required  formControlName="password" autocomplete="new-password">
                   <label for="password">Mot de passe</label>
-                </div>
+                  <mdb-error *ngIf="password.invalid && (password.dirty || password.touched)">Le mot de passe doit être composé de 8 à 20 caractères </mdb-error>
+                  <mdb-success *ngIf="password.valid && (password.dirty || password.touched)"></mdb-success>
+                </div>  
               </div>
               <div class="col">
                
                 <div class="md-form">
-                  <input type="password" id="confirmpass" class="form-control" mdbInput formControlName="password_confirmation">
+                  <input type="password" required id="confirmpass" class="form-control" mdbInput mdbValidate formControlName="password_confirmation" autocomplete="new-password">
                   <label for="confirmpass">Confirmer mot de passe</label>
+                  <mdb-error *ngIf="password_confirmation.invalid && (password_confirmation.dirty || password_confirmation.touched)">Le mot de passe doit être composé de 8 à 20 caractères </mdb-error>
+                  <mdb-success *ngIf="password_confirmation.valid && (password_confirmation.dirty || password_confirmation.touched)"></mdb-success>
                 </div>
               </div>
             </div>
-    
-          <button mdbBtn color="red" outline="true"  class="my-4  text-bold" style="font-weight: bold;" [disabled]="!signupForm.valid"  type="submit">Envoyer</button>   
+           
+            <div class="col">
+               
+              <div class="form-group" >
+                <div  >
+                  <label class="mr-2">  
+                    <input type="radio" value="Artisan"  (change)="radioChange($event)" formControlName="role" >
+                    Artisan
+                   
+                  </label>
+                 
+                  <label>  
+                    <input type="radio" value="Client" (change)="radioChange($event)" formControlName="role">
+                    Client
+                  </label>
+                  <div class="col" *ngIf="SelectedRole == 'Artisan'" >
+                    <div class="md-form">
+                       <input type="text" id="domaine" class="form-control" mdbInput formControlName="domaine">
+                       <label for="domaine">Domaine</label>
+                     </div>
+                   </div>
+                </div>
+                
+               </div>
+
+             </div>
+            
+        <div class="d-flex justify-content-end">
+          <button   class="btn-outline-grey  text-bold px-3 py-2 mr-3"    type="submit" (click)="Effacer()">Effacer tout</button> 
+          <button   class="btn-outline-red  text-bold px-3 py-2 "  [disabled]="!signupForm.valid"  type="submit">Envoyer</button>
+        </div>
+           
       
         </div>
       </form>
-   <div> <img src="http://localhost:8000/storage/{{data}}"></div>
-   </mdb-card-body>
-  </mdb-card></div>
+    </div>
+    
+      
+  </div>
+  </mdb-card>
+  
+
       
     

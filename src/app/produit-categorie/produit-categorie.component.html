@@ -1,0 +1,61 @@
+<div style="width: 95%;">
+
+ <div class="md-form col-sm-3" >
+    <div>
+      <input mdbInput type="text" id="recherche" class="form-control d-flex " [(ngModel)]="search"  >
+      <label for="recherche" class="ml-3">Recherche</label>
+    </div>
+ </div>
+
+<div class="row mt-2 ml-1">
+    <div class="col-sm-3">
+        <app-categoriemenu></app-categoriemenu>
+
+      <div>
+         <label for="prix">Prix: {{ selectprix }}</label> 
+           <section class="range-slider">
+            
+            <input  min="0"  max="1000"  type="range" [(ngModel)]="prixsearchmin" (ngModelChange)="setPrix($event)">
+            <input  min="0" max="1000"  type="range" [(ngModel)]="prixsearchmax" (ngModelChange)="setPrix($event)">
+         
+          </section>
+      </div>
+   </div>
+    
+<div class="col-sm-8 row mt-5"  >
+      
+    <div class="col-sm-4" *ngFor="let produit of produits | produitFilter:search |prixFiltermin:prixsearchmin |prixFiltermax:prixsearchmax ">   
+          <div class=" zoom overlay view z-depth-1 mb-4">
+
+            <img class="img-fluid" src="http://localhost:8000/storage/{{produit.image}}" > 
+           
+             <div class="mask d-flex justify-content-center align-items-end ">
+             
+             <button type="button" title="ajouter produit au panier"  class="btn" (click)="AjouterprPanier(produit)" style="background-color:  #b71c1c; color: white; border-radius: 25px; padding:15px" ><i class="fas fa-cart-plus fa-lg mr-1"></i></button>
+         </div>
+     </div>
+          <a class="text-center" routerLink="showproduit/{{produit.id}}">  
+
+          <div>
+            {{produit.libelle}}
+             <div *ngIf="produit.promo >0 then thenBlock else elseBlock"></div>
+
+            <ng-template #thenBlock> 
+              <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-baseline">
+                  <p style="font-size: 13px;" class="mr-2">{{produit.prix}}</p>
+                  <del style="color: red;font-size: 10px;" >{{produit.prix / (100- produit.promo) *100 | number:'1.0-0'}} <span>TND</span></del> 
+                </div>
+                <p  style="border:1px  solid green; color: green;font-weight: bold;font-size: 12px;padding: 1px;"  >{{produit.promo}} % </p> 
+             </div>
+            </ng-template>
+
+            <ng-template #elseBlock> 
+             <p> {{produit.prix}}</p>
+            </ng-template>
+          </div>  
+         </a>   
+      </div>
+    </div>
+  </div>
+</div>  

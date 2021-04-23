@@ -1,0 +1,61 @@
+<div class="md-form d-flex justify-content-around">
+  <input type="date" mdbInput class="form-control col-sm-4" [(ngModel)]="search" />
+</div>
+<div class="d-flex justify-content-center table-responsive">
+  <table class="table table-striped col-sm-8 mt-2 ">
+    <thead class="grey darken-1 white-text">
+        <th>Image</th>
+        <th>Libelle</th>
+        <th>Couleur</th>
+        <th>Quantité par couleur</th>
+        <th>Prix</th>
+        <th>quantité générale</th>
+        <th>Prix proposé</th>
+        <th>Date</th>
+        <th>Accepter</th>
+        <th>Refuser</th>
+    </thead>
+    <tbody>
+        <tr  *ngFor="let produit of produits | dateFilter:search ;let i=index  ">
+          <td>
+            <img src="http://localhost:8000/storage/{{produit.image}}" width="120px" class=" img-fluid">
+          </td>
+          <td>{{produit?.libelle}}</td>
+          <td>
+           <div *ngIf="produit.couleurSouhaite[0] != 'vide' ">
+              <div class="d-flex flex-column">
+                  <div *ngFor="let tc of produit.couleurSouhaite" class="pl-1 mb-1  mt-2 ">
+                    <div [ngStyle]="{'background-color': tc}" style="width: 20px;height: 20px;" ></div>
+                  </div>
+              </div>
+           </div>
+        </td>
+        <td>
+          <div *ngIf="produit.couleurSouhaite[0] != 'vide' ">
+            <div class="d-flex flex-column">
+                      <div *ngFor="let tq of produit.qtecouleur" class="pl-1 mb-1 mt-2">
+                    <span>{{tq}}</span>
+                        </div>
+            </div>
+          </div>
+        </td>
+          <td>{{produit.prix - ((produit.prix/100)* produit.promo) | number:'1.3-3'}}</td>
+          <td>{{produit?.qte}}</td>
+          <td>{{produit?.prixpropose}}</td>
+          <td>{{produit?.date  | date:"dd/MM/yyyy" }}</td>
+          <td>
+            <form  [formGroup]='formok' (ngSubmit)="ok(produit)">
+              <input type='hidden'  id="ok" class="form-control" mdbInput    formControlName="ok" value="okvalue">
+              <i class="far fa-check-circle fa-2x ml-3 " style="color: green;cursor: pointer;" (click)="ok(produit)"></i>
+            </form>
+          </td>
+          <td> 
+            <form  [formGroup]='formrefuser' (ngSubmit)="refuser(produit)">
+              <input type='hidden'  id="refuser" class="form-control" mdbInput formControlName="refuser" value="refuservalue">
+              <i class="far fa-times-circle fa-2x ml-3" style="color: red;cursor: pointer;" (click)="refuser(produit)"></i>
+            </form>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+</div>

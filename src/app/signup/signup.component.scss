@@ -1,0 +1,46 @@
+
+.signup
+{
+    font-weight: bold;
+    font-family: 'Spartan', sans-serif;
+    font-size: medium;
+    width: 98%;
+}
+
+input,label,button
+{
+    font-weight: bold;
+}
+.md-form
+{
+    font-weight: bold;
+}
+.browse-buttonuser
+{
+    width: 100%;
+    height: 110px;
+    opacity: 1;
+}
+.editimguser
+{
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+}
+.browse-inputuser
+{
+    width: 100%;
+    height: 140px;
+    transform: translate(0px,-135px);
+     opacity: 0;
+}
+.scrollbar 
+{
+    margin-left: 30px;
+    float: left;
+    height:400px;
+    background: #fff;
+    overflow-y: scroll;
+    margin-bottom: 25px;
+   
+}
